@@ -1,4 +1,4 @@
-import { onLoad, useLogger, mikser, createdHook, updatedHook, deletedHook } from 'mikser-core'
+import { onLoad, useLogger, mikser, createdHook, updatedHook, deletedHook, scheduleHook } from 'mikser-core'
 import express from 'express'
 import bodyParser from 'body-parser'
 
@@ -47,6 +47,15 @@ async function deleted(req, res, next) {
     }
 }
 
+async function schedule(req, res, next) {
+    try {
+        await scheduleHook(req.params.name, req.body)
+        res.json({ success: true })
+    } catch (err) {
+        next(err)
+    }
+}
+
 async function authorization(req, res, next) {
     if (!mikser.config.webhooks?.token) next()
     else {
@@ -65,6 +74,7 @@ onLoad(async () => {
     let app = mikser.options.app || express()
 
     const webhooks = express()
+    webhooks.post('/schedule/:name?', authorization, schedule)
     webhooks.post('/:name', authorization, created)
     webhooks.put('/:name', authorization, updated)
     webhooks.delete('/:name', authorization, deleted)
