@@ -1,0 +1,23 @@
+{
+  "name": "mikser-core-webhooks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "peerDependencies": {
+    "express": "^4.18.2",
+    "mikser-core": "^1.0.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almero-digital-marketing/mikser-core-webhooks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/almero-digital-marketing/mikser-core-webhooks/issues"
+  },
+  "homepage": "https://github.com/almero-digital-marketing/mikser-core-webhooks#readme",
+  "dependencies": {
+  }
+}
