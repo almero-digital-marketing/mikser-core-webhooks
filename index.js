@@ -49,7 +49,7 @@ async function deleted(req, res, next) {
 
 async function schedule(req, res, next) {
     try {
-        await scheduleHook(req.params.name, req.body)
+        await scheduleHook(req.body.uri, req.body)
         res.json({ success: true })
     } catch (err) {
         next(err)
