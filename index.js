@@ -64,7 +64,7 @@ onLoad(async () => {
     app.use(bodyParser.json())
     
     if (!mikser.options.app) {
-        app.use('/webhooks', webhooks)
+        app.use('/mikser/webhooks', webhooks)
         const { port } = mikser.config.webhooks || {}
         if (!port) {
             return logger.error('Web Hooks port config is missing.')
