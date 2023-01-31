@@ -44,8 +44,9 @@ async function authorization(req, res, next) {
         const [bearer, token] = req.headers.authorization?.split(' ') 
         if (bearer != 'Bearer' || token != mikser.config.webhooks?.token) {
             res.set('WWW-Authenticate', 'Bearer realm="token"')
-            res.status(401).send('Authorization token is missing or invalid.')
+            return res.status(401).send('Authorization token is missing or invalid.')
         }
+        next()
     }
 }
 
@@ -62,16 +63,14 @@ onLoad(async () => {
     webhooks.delete('/:name', authorization, deleted)
 
     app.use(bodyParser.json())
+    app.use('/mikser/webhooks', webhooks)
     
     if (!mikser.options.app) {
-        app.use('/mikser/webhooks', webhooks)
         const { port } = mikser.config.webhooks || {}
         if (!port) {
             return logger.error('Web Hooks port config is missing.')
         }
         logger.info('Web Hooks listening on port: %d', port)
         app.listen(port)
-    } else {
-        app.use('/mikser/webhooks', webhooks)
     }
 })
