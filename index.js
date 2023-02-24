@@ -8,7 +8,7 @@ export default ({
     createdHook, 
     updatedHook, 
     deletedHook, 
-    triggerHook 
+    triggeredHook 
 }) => {
     async function created(req, res) {
         try {
@@ -39,7 +39,7 @@ export default ({
     
     async function trigger(req, res) {
         try {
-            await triggerHook(req.body.uri, req.body)
+            await triggeredHook(req.body.uri, req.body)
             res.json({ success: true })
         } catch (err) {
             res.json({ success: false, message: err.message })
